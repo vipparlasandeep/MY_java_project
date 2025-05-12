@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        SONAR_TOKEN = credentials('sonar-token') // SonarQube token stored in Jenkins
-        DOCKER_CREDENTIALS = credentials('docker-hub') // Docker Hub credentials
+        SONAR_TOKEN = credentials('sonarqube-tokken') // SonarQube token stored in Jenkins
+        DOCKER_CREDENTIALS = credentials('docker_hub_cred') // Docker Hub credentials
     }
     stages {
         stage('Checkout Code') {
