@@ -1,60 +1,34 @@
-pipeline{
-    agent any 
-        stages {
-            stage ('code checkout'){
-                steps{
-                    git url: 'https://github.com/sandeep/my-repo.git', branch: 'main'
-                }
+pipeline {
+    agent any
+    environment {
+        SONAR_TOKEN = credentials('sonar-token') // SonarQube token stored in Jenkins
+        DOCKER_CREDENTIALS = credentials('docker-hub') // Docker Hub credentials
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git url: 'https://github.com/vipparlasandeep/MY_java_project.git', branch: 'main'
             }
-
-            stage ('build'){
-                steps{
-                    sh 'maven clean package'
-                }
-            }
-            stage ('test'){
-                steps{
-                    sh 'maven test'
-                }
-            }
-
-
-            stage ('Sonarqube analysis'){
-                steps{
-                    script {
-                        def scannerHome = tool 'SonarQube Scanner'
-                        withSonarQubeEnv('SonarQube') {
-                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=project-key -Dsonar.sources=. -Dsonar.host.url=http://<ip>:9000 -Dsonar.login=<token>"
-                        }
-                    }
-                }
-            }
-
-            stage ('build docker image'){
-                steps{
-                    sh 'docker build -t my-java-project'
-                    }
-                }
-
-            stage ('Trivy scan'){
-                steps{
-                    sh 'trivy image <image-name>'
-                }
-            }   
-
-            stage ('OWASP Dependency check'){
-
-                steps{
-                    sh 'dependency-check.sh --project <project-name> --scan <path-to-scan>'
-                }
-            }   
-
-            stage ("Docker push"){
-                steps{
-                    script {
-                        sh 'docker push <image-name>'
-                    }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN'
                 }
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t my-app:latest .'
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                withDockerRegistry([credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/']) {
+                    sh 'docker tag my-app:latest my-docker-user/my-app:latest'
+                    sh 'docker push my-docker-user/my-app:latest'
+                }
+            }
+        }
+    }
 }
