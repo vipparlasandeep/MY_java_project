@@ -3,7 +3,7 @@ pipeline{
         stages {
             stage ('code checkout'){
                 steps{
-                    git branch: 'main', url: ' <url>'
+                    git branch: 'main', url: ' https://github.com/vipparlasandeep/MY_java_project.git'
                 }
             }
 
