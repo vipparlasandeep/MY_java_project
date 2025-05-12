@@ -1,0 +1,6 @@
+projectKey=java_project_new
+serverUrl=http://18.212.82.68:9000
+serverVersion=25.5.0.107428
+dashboardUrl=http://18.212.82.68:9000/dashboard?id=java_project_new
+ceTaskId=77a6ea29-b03d-4e7d-8d71-7f01cbc7b776
+ceTaskUrl=http://18.212.82.68:9000/api/ce/task?id=77a6ea29-b03d-4e7d-8d71-7f01cbc7b776
