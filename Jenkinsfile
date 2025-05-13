@@ -3,7 +3,7 @@ pipeline {
     environment {
         SONAR_TOKEN = credentials('sonarqube-tokken') // SonarQube token stored in Jenkins
         DOCKER_CREDENTIALS = credentials('docker_hub_cred') // Docker Hub credentials
-        SCANNER_HOME=tool 'sonar-scanner'
+        SCANNER_HOME=tool 'sonar-qube-scanner'
     }
     stages {
         stage('Checkout Code') {
