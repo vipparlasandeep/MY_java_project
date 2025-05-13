@@ -14,7 +14,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh 'sonar-scanner -Dsonar.host.url=http://98.85.117.213:9000 -Dsonar.login=$SONAR_TOKEN'
+                    sh '$SCANNER_HOME/bin/sonar-scanner -Dsonar.host.url=http://98.85.117.213:9000 -Dsonar.login=$SONAR_TOKEN'
                 }
             }
         }
