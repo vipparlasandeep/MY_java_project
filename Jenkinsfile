@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS = credentials('docker_hub_cred') // Docker Hub credentials
         SCANNER_HOME = tool 'sonar-qube-scanner'
+        MAVEN_HOME = tool 'Maven'
     }
     stages {
         stage('Checkout Code') {
