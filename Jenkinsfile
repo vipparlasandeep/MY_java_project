@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SONAR_TOKEN = credentials('sonarqube-tokken') // SonarQube token stored in Jenkins
+        
         DOCKER_CREDENTIALS = credentials('docker_hub_cred') // Docker Hub credentials
         SCANNER_HOME=tool 'sonar-qube-scanner'
     }
@@ -14,7 +14,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh '$SCANNER_HOME/bin/sonar-scanner -Dsonar.host.url=http://98.85.117.213:9000 -Dsonar.login=$SONAR_TOKEN'
+                    sh '$SCANNER_HOME/bin/sonar-scanner -Dsonar.host.url=http://98.85.117.213:9000 -Dsonar.login=squ_d9418b17908484c8b514f5e2c648958fa70fc903'
                 }
             }
         }
